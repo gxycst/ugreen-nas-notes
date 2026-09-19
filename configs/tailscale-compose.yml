@@ -1,0 +1,19 @@
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    hostname: ugreen-nas
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      TS_AUTH_KEY: tskey-xxxx
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_USERSPACE: "false"
+      TS_EXTRA_ARGS: --advertise-routes=192.168.31.0/24
+    volumes:
+      - /volume1/docker/tailscale/state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+
