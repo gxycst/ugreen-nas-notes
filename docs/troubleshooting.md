@@ -58,8 +58,13 @@
 
 ## 机械盘仍被唤醒
 
+- 先区分风扇噪声和机械盘转动；CPU 高温会让风扇高速运转，即使机械盘已经休眠。
+- 停止电视播放、文件传输和相册浏览后，再检查 `/dev/sda` 的 `STANDBY` / `ACTIVE` 状态。
+- 用 `pidstat -d` 比较相册、网盘和数据库进程，不要仅凭服务存在就认定它正在读盘。
+- 用 `cat /proc/swaps` 确认 Swap 是否位于机械盘。
 - `DockerRootDir` 在 SSD 不代表 bind mount 也在 SSD。
 - 对每个容器执行 `docker inspect` 并检查 `.Mounts`。
 - 搜索 Compose、脚本和计划任务中残留的 `/volume1`。
 - 迁移验证前不要删除机械盘源数据。
 
+完整案例见：[机械硬盘休眠失效排查](./05-hdd-sleep-investigation.md)。

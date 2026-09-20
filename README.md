@@ -18,6 +18,7 @@
 - [LinuxServer Chromium：中文、代理与远程浏览器](./docs/02-linuxserver-chromium.md)
 - [Tailscale：异地访问绿联 NAS 和家庭局域网](./docs/03-tailscale-remote-access.md)
 - [Docker 持久化数据迁移 SSD](./docs/04-docker-migrate-to-ssd.md)
+- [机械硬盘休眠失效排查：风扇、Chromium、相册与网盘同步](./docs/05-hdd-sleep-investigation.md)
 - [常见问题与排障](./docs/troubleshooting.md)
 
 ## 可复用配置
@@ -40,4 +41,3 @@
 - 不要把 Mihomo `secret`、Tailscale Auth Key、UGREENlink Token 或密码提交到 Git。
 - 示例里的 `<MIHOMO_SECRET>`、`tskey-xxxx`、`nas.example.com` 必须替换为自己的值。
 - SSH、Mihomo API 和管理页面不要直接裸露到公网；优先使用 Tailscale 或受控的 UGREENlink 入口。
-
