@@ -97,19 +97,17 @@ source ~/.bashrc
 
 不要把 API Key 写进文档、脚本或 systemd 服务。使用 ChatGPT 账号登录即可。
 
-### 方式 A：设备代码登录
+本机实际成功的是普通 `codex login` 配合 SSH 转发登录回调。曾试过 `codex login --device-auth`：CLI 提供了该选项，但授权页面要求先启用设备代码认证，个人 Plus 账号设置中没有找到相应开关，因此这次没有通过设备代码完成登录。
 
-在 ChatGPT 的安全设置中启用 Codex CLI 设备代码授权，然后在 NAS 执行：
+### SSH 转发登录回调
+
+先在 NAS 检查 SSH 是否允许端口转发：
 
 ```bash
-codex login --device-auth
+sudo sshd -T | grep -i allowtcpforwarding
 ```
 
-在电脑或手机浏览器打开命令显示的网址，输入一次性设备代码并完成授权。设备代码相当于临时凭据，不要发送给其他人。
-
-### 方式 B：SSH 转发登录回调
-
-如果设备代码登录不可用，使用这一条已经实际验证过的方式。
+这台绿联当时显示 `allowtcpforwarding no`，配置位于 `/etc/ssh/sshd_config`。如遇到同样情况，先确认具体配置位置，只把该项改为 `AllowTcpForwarding yes`；运行 `sudo sshd -t` 确认语法正确，再 `sudo systemctl reload ssh`，最后复查 `sshd -T` 显示 `yes`。保持原 SSH 会话打开，避免修改配置时断开后无法登录。
 
 先在 Windows PowerShell 建立带回调端口的 SSH 连接：
 
@@ -303,7 +301,7 @@ ls -la /volume2/ssd_docker/codex-data | head
 
 ## 安全提醒
 
-- 不要提交 `~/.codex/auth.json`、访问令牌、设备代码或 API Key。
+- 不要提交 `~/.codex/auth.json`、访问令牌、登录回调地址或 API Key。
 - `codex-data` 包含登录状态和会话记录，备份时按敏感数据处理。
 - Codex 拥有当前 Linux 用户能够访问的文件和命令权限；不要用 root 用户长期运行。
 - ttyd 本身只是网页终端，不等于身份认证系统，不要裸露到公网。
@@ -311,5 +309,4 @@ ls -la /volume2/ssd_docker/codex-data | head
 ## 参考
 
 - [OpenAI Codex](https://developers.openai.com/learn/codex)
-- [Codex CLI 设备代码身份验证说明](https://developers.openai.com/zh-Hans/docs/enterprise/access-tokens)
 - [ttyd 1.7.7 Release](https://github.com/tsl0922/ttyd/releases/tag/1.7.7)
