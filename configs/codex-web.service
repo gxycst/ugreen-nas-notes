@@ -1,0 +1,20 @@
+[Unit]
+Description=Codex Web Terminal
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=<NAS_USER>
+WorkingDirectory=/volume2/ssd_docker/codex-work
+Environment=HOME=/home/<NAS_USER>
+Environment=PATH=/home/<NAS_USER>/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=HTTP_PROXY=http://192.168.31.192:34421
+Environment=HTTPS_PROXY=http://192.168.31.192:34421
+Environment=ALL_PROXY=http://192.168.31.192:34421
+ExecStart=/volume2/ssd_docker/ttyd/ttyd-host -W -p 7681 -t titleFixed=Codex -t fontSize=16 -t cursorStyle=bar -t cursorBlink=true -t 'theme={"background":"#1E1E2E","foreground":"#CDD6F4","cursor":"#F5E0DC","selectionBackground":"#585B70","black":"#45475A","red":"#F38BA8","green":"#A6E3A1","yellow":"#F9E2AF","blue":"#89B4FA","magenta":"#F5C2E7","cyan":"#94E2D5","white":"#BAC2DE","brightBlack":"#585B70","brightRed":"#F38BA8","brightGreen":"#A6E3A1","brightYellow":"#F9E2AF","brightBlue":"#89B4FA","brightMagenta":"#F5C2E7","brightCyan":"#94E2D5","brightWhite":"#A6ADC8"}' /bin/bash -lc 'exec /home/<NAS_USER>/.local/bin/codex'
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -19,6 +19,7 @@
 - [Tailscale：异地访问绿联 NAS 和家庭局域网](./docs/03-tailscale-remote-access.md)
 - [Docker 持久化数据迁移 SSD](./docs/04-docker-migrate-to-ssd.md)
 - [机械硬盘休眠失效排查：风扇、Chromium、相册与网盘同步](./docs/05-hdd-sleep-investigation.md)
+- [绿联 NAS 运行 Codex CLI：SSD 持久化、ChatGPT 登录与网页终端](./docs/06-ugreen-nas-codex-cli.md)
 - [常见问题与排障](./docs/troubleshooting.md)
 
 ## 可复用配置
@@ -26,6 +27,7 @@
 - [`configs/metacube-gateway-nginx.conf`](./configs/metacube-gateway-nginx.conf)：UGREENlink 单入口 Nginx 反向代理
 - [`configs/chromium-docker-run.sh`](./configs/chromium-docker-run.sh)：LinuxServer Chromium 启动示例
 - [`configs/tailscale-compose.yml`](./configs/tailscale-compose.yml)：Tailscale Subnet Router Compose 示例
+- [`configs/codex-web.service`](./configs/codex-web.service)：Codex 网页终端 systemd 服务模板
 
 ## 状态说明
 
